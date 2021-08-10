@@ -10,13 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_04_084842) do
+ActiveRecord::Schema.define(version: 2021_08_09_141403) do
+
+  create_table "table_user_activities", charset: "utf8mb4", force: :cascade do |t|
+    t.string "action"
+    t.bigint "user_id"
+    t.integer "updater_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_table_user_activities_on_user_id"
+  end
 
   create_table "users", charset: "utf8mb4", force: :cascade do |t|
     t.string "email"
     t.string "password_digest"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "archived"
+    t.index ["archived"], name: "index_users_on_archived"
   end
 
+  add_foreign_key "table_user_activities", "users"
 end
